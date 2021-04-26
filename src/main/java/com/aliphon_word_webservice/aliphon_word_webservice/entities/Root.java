@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Root {
 
@@ -23,7 +21,6 @@ public class Root {
     private String root;
 
     @OneToMany(mappedBy = "root")
-    @JsonIgnore
     private List<Word> words;
 
     public Long getId() {
