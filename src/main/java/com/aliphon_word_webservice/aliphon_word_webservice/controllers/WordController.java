@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +31,16 @@ public class WordController {
         try {
             List<Word> words = this.wordService.get();
             return new ResponseEntity<List<Word>>(words, HttpStatus.OK);
+        } catch (DatabaseException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<?> add(@RequestBody Word word) {
+        try {
+            this.wordService.add(word);
+            return new ResponseEntity<Void>(HttpStatus.CREATED);
         } catch (DatabaseException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

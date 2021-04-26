@@ -23,4 +23,8 @@ public class WordService {
         });
         return words;
     }
+
+    public void add(Word word) throws DatabaseException {
+        this.wordRepository.save(word);
+    }
 }
